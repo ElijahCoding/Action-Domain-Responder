@@ -3,11 +3,19 @@
 namespace App\Domain\Services;
 
 use App\Domain\Models\Post;
+use App\Domain\Repositories\PostRepository;
 
 class PostIndexService
 {
+  protected $posts;
+
+  public function __construct(PostRepository $posts)
+  {
+    $this->posts = $posts;
+  }
+
   public function handle()
   {
-    return Post::get()->toArray();
+    return $this->posts->all();
   }
 }
