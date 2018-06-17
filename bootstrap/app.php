@@ -14,6 +14,23 @@ $container = $app->getContainer();
 
 $container->get('settings')->set('displayErrorDetails', true);
 
+$container->get('settings')->set('db', [
+    'driver' => 'pgsql',
+    'host' => '127.0.0.1',
+    'database' => 'ADR',
+    'username' => 'postgres',
+    'password' => 'root',
+    'charset' => 'utf8',
+    'collation' => 'utf8_unicode_ci',
+    'prefix' => '',
+]);
+
+$capsule = new Illuminate\Database\Capsule\Manager();
+$capsule->addConnection($container->get('settings')->get('db'));
+
+$capsule->setAsGlobal();
+$capsule->bootEloquent();
+
 $container->share('view', function ($container) {
     $view = new \Slim\Views\Twig(__DIR__ . '/../resources/views', [
         'cache' => $container->settings['views']['cache']

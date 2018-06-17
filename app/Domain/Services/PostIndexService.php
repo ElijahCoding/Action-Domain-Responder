@@ -2,13 +2,12 @@
 
 namespace App\Domain\Services;
 
+use App\Domain\Models\Post;
+
 class PostIndexService
 {
   public function handle()
   {
-    return [
-      'id' => 1,
-      'name' => 'Elijah'
-    ];
+    return Post::get()->toArray();
   }
 }
